@@ -12,10 +12,14 @@ int main()
 {
 
 Polynomial a ({0,1,0,1,0}) ;
-Polynomial b ({1,0,1,0});
+Polynomial b ;
+Polynomial c (a);
 
-cout<<a+b;
+b.setcoefs({1,1,1,1});
 
+cout<<b.getcoef(0)<<endl;
+cout<<b<<endl;
+cout<< b.eval(2)<<endl;
 
 
 

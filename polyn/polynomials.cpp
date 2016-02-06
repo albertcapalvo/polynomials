@@ -6,20 +6,27 @@
 using namespace std;
 
 
-Polynomial::Polynomial()
-{
+Polynomial::Polynomial(){
 comp={0,0};
-
 }
 
-Polynomial::Polynomial(vector<double> inp)
-{
+Polynomial::Polynomial(vector<double> inp){
 comp=inp;
-
 }
+
+
+
+
+Polynomial::Polynomial(const Polynomial &inp){
+comp=inp.comp;
+}
+
+
+
 
 Polynomial::~Polynomial(){
 }
+
 
 ostream& operator<<(ostream &os, const Polynomial &p){
  for(int i=0;i<p.comp.size(); i++)
@@ -34,22 +41,76 @@ ostream& operator<<(ostream &os, const Polynomial &p){
           os<<" + ";
       }
      }
-
-
-
  }
  return os;
 }
 
+void Polynomial::setcoefs(const vector<double>& a)
+{
+comp=a;
+}
+
+double Polynomial::getcoef(const int& a)
+{
+return comp[a];
+}
+
+
+double Polynomial::eval(const double& a)
+{
+    double res;
+    for(int i=0;i<comp.size(); i++)
+    {
+        res=res+comp[1]*pow(a,i);
+     }
+return res;
+}
+
+
 Polynomial operator+(const Polynomial &p1, const Polynomial &p2)
 {
 int m=max(p1.comp.size(),p2.comp.size()) ;
+// improvement to do: split the for into 2, one for the indexes in common
+// and another for the expansion
 vector<double> p3(m);
-
 for(int i=0;i<m; i++)
   {
 p3[i]= p1.comp[i]+p2.comp[i];
  }
+ return Polynomial(p3);
+}
 
+
+
+
+
+
+
+Polynomial operator-(const Polynomial &p1, const Polynomial &p2)
+{
+int m=max(p1.comp.size(),p2.comp.size()) ;
+// improvement to do: split the for into 2, one for the indexes in common
+// and another for the expansion
+vector<double> p3(m);
+for(int i=0;i<m; i++)
+  {
+p3[i]= p1.comp[i]-p2.comp[i];
+ }
+ return Polynomial(p3);
+}
+
+
+
+
+Polynomial operator*(const Polynomial &p1, const Polynomial &p2)
+{
+int m=max(p1.comp.size(),p2.comp.size()) ;
+// improvement to do: split the for into 2, one for the indexes in common
+// and another for the expansion
+vector<double> p3(m);
+for(int i=0;i<m; i++)
+  {
+p3[i]= p1.comp[i]*p2.comp[i];
+ }
  return Polynomial(p3);
 }
